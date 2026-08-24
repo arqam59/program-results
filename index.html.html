@@ -544,9 +544,9 @@ function medalLabel(i){ return i===0?'1':(i===1?'2':'3'); }
 
 async function loadData(){
   try{
-    const res = await window.storage.get(STORAGE_KEY, true);
-    if(res && res.value){
-      DATA = JSON.parse(res.value);
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved){
+      DATA = JSON.parse(saved);
     }
   }catch(e){
     /* no saved data yet, or storage unavailable — fall back to defaults */
@@ -557,7 +557,7 @@ async function loadData(){
 
 async function saveData(){
   try{
-    await window.storage.set(STORAGE_KEY, JSON.stringify(DATA), true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
   }catch(e){
     console.error('Could not save changes', e);
   }
